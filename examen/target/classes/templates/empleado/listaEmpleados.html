@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="favicon.ico">
+
+    <title>EmpleosApp | Listado de Empleados</title>
+    <!-- Bootstrap core CSS -->
+    <link th:href="@{/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
+    <!-- Custom styles for this template -->
+    <link th:href="@{/bootstrap/css/jumbotron.css}" rel="stylesheet">
+    <link th:href="@{/bootstrap/css/sticky-footer-navbar.css}" rel="stylesheet">
+  	<link href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" rel="stylesheet">
+  </head>
+
+  <body >
+
+    <header>
+      <nav class="navbar navbar-expand-md navbar-dark fixed-top " style="background-color:#d63384">
+        <a class="navbar-brand" href="#">UNIT00</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+              <a class="nav-link active" href="#">Inicio</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" th:href="@{/empleado/index}">Empleados</a>
+            </li>
+			 <li class="nav-item">
+              <a class="nav-link" href="#"></a>
+            </li>
+          </ul>  
+          <a class="btn bg-light text-dark" href="#">Ingresar</a>&nbsp;
+          <a class="btn bg-light text-dark" href="#">Registrarse</a>
+        </div>
+      </nav>
+    </header>
+
+    <main role="main">     
+      <hr style="border:0px">
+      <div class="container"> 
+        <div class="card">
+          <h4 class="card-header"><strong>Listado de Empleados</strong></h4>              
+          <div class="card-body table-responsive">
+            <a class="btn  text-white" th:href="@{/empleado/crear}" role="button" style="background-color:#d63384"><i class="fas fa-file" aria-hidden="true"></i> Nueva</a>            
+            <hr style="border:0px">
+            <table class="table table-hover">
+              <thead class="text-white" style="background-color:#d63384">
+                <tr>
+                  <th scope="col">N.Ventas</th>
+                  <th scope="col">Nombre Produc.</th>
+                  <th scope="col">Genero</th>
+				  <th scope="col">email</th>
+				  <th scope="col">Fecha de compra</th>
+				  <th scope="col">Precio</th>
+				  
+                </tr>
+              </thead>
+              <tbody>
+                <tr th:each="a:${empleado}">
+                  <th scope="row" th:text="${a.id}"></th>
+                  <td th:text="${a.nombre}"></td>
+				  <!--<td th:text="${a.genero}"></td> -->
+				  <!--Como el tipo Character es un objeto, no podemos evaluarlo como
+				  	un primitivo, razon por la cual se debe convertir a String y
+				  	evaluarlo como String para pintar la leyenda Femenino o Masculino -->
+				  <td th:text="${#strings.toString(a.genero) eq 'F'?'Femenino':'Masculino' }" ></td> 
+				  <td th:text="${a.email}"></td>
+				  <td th:text="${a.fechaNacimiento}"></td>
+				  <th scope="row" th:text="${a.salario}"></th>
+				  <th scope="row" th:text="${a.foto}"></th>
+                  <td>
+                    <a th:href="@{/empleado/buscar(id=${a.id})}" class="btn btn-secondary btn-sm" role="button" title="Editar"><i class="fas fa-pencil-alt" aria-hidden="true"></i></a>
+                    <a href="#" class="btn btn-secondary btn-sm" role="button" title="Detalles"><i class="fas fa-file-alt" aria-hidden="true"></i></a>
+                    <a th:href="@{/empleado/eliminar(id=${a.id})}" onclick="return confirm('¿Estas seguro?')" class="btn btn-danger btn-sm" role="button" title="Eliminar"><i class="fas fa-trash" aria-hidden="true"></i></a>
+                  </td>
+				
+                </tr>
+				 
+                <tr>
+					<td>Total de ventas</td>
+					<td colspan="6" th:text="${total}"></td>
+				</tr>   
+				<tr>
+					<td>venta del dia</td>
+					<td colspan="6" >112000.0</td>
+				</tr>          
+              </tbody>
+            </table>
+            
+          </div>
+        </div>
+      </div> <!-- /container -->
+
+    </main>
+
+    <footer class="footer">
+      <div class="container">
+        <p>
+          &copy; 2021 LibreríaApp, Inc. | WebApp Desarrollada con Spring Boot 2.4.0 y Bootstrap 4.2 | Autor: José Antonio Ruiz Cortés | &middot; <a href="#">Privacy</a>
+          &middot; <a href="#">Terms</a>
+        </p>
+      </div>
+    </footer>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script th:src="@{/bootstrap/js/bootstrap.min.js}"></script>     
+  </body>
+</html>
